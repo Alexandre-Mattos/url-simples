@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>URL encurtada</title>
+</head>
+<body>
+    <h1>URL encurtada:</h1>
+    <p>{{ short_url }}</p>
+</body>
+</html>
