@@ -1,11 +1,11 @@
 /* eslint-disable */
 const express = require('express')
-const app = express()
+const cors = require('cors')
 
-// Importa as rotas do arquivo index.js na pasta "routes"
+const app = express()
 const routes = require('./routes/routes')
 
-// Define as rotas principais
+app.use(cors())
 app.use('/', routes)
 
 module.exports = app

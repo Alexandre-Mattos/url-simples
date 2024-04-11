@@ -11,23 +11,7 @@ const encurtarUrl = async (req, res, next) => {
   const shortUrl = gerarShortUrl(originalUrl)
   const link = await createUrl(shortUrl, originalUrl)
 
-  /* res.json({
-    shortUrl: `${req.protocol}://${req.get('host')}` + '/' + shortUrl,
-  }) */
-
-  const htmlResponse = `
-    <html>
-      <head>
-        <title>URL encurtada</title>
-      </head>
-      <body>
-        <h1>URL encurtada:</h1>
-        <p>Short URL: https://url-simples.web.app/${shortUrl}</p>
-      </body>
-    </html>
-  `
-
-  res.send(htmlResponse)
+  res.send(`${process.env.FRONTEND_URL}/${shortUrl}`)
 }
 
 const recuperarUrl = async (req, res) => {
@@ -37,7 +21,7 @@ const recuperarUrl = async (req, res) => {
     const url = link.data()
     res.redirect(url.url_original)
   } else {
-    res.sendStatus(404)
+    res.sendStatus(404).redirect(process.env.FRONTEND_URL)
   }
 }
 
@@ -59,9 +43,7 @@ async function getUrl(url) {
 }
 
 async function createUrl(code, url) {
-  const links = await db.collection('link').doc(code)
-
-  links.set({
+  const links = await db.collection('link').doc(code).set({
     url_original: url,
   })
 }
